@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Science - Smart Learn</title>
+  <style>
+    body{font-family:'Segoe UI',sans-serif;margin:0;padding:16px;background:#f6faff;color:#223;}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+    .back-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#fff;border:1px solid #ccc;border-radius:12px;cursor:pointer;text-decoration:none;color:#223;}
+    .logo{width:40px;height:40px;background:linear-gradient(135deg,#84fab0,#8fd3f4);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#003;font-weight:700;}
+    .content{margin-top:12px;}
+    .topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-top:12px;}
+    .topic{background:#fff;border-radius:12px;padding:12px;text-align:center;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,0.08);}
+    .topic svg{width:32px;height:32px;margin-bottom:6px;}
+    .fact-box{margin-top:20px;background:#fff;border-radius:12px;padding:12px;box-shadow:0 2px 6px rgba(0,0,0,0.08);}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="home.html" class="back-btn">
+      <!-- Back arrow SVG offline -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 1-.5.5H2.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8z"/>
+      </svg>
+      Back
+    </a>
+    <div class="logo">SCI</div>
+    <h1>Science</h1>
+  </header>
+
+  <div class="content">
+    <p>Select a topic to learn a quick fact:</p>
+    <div class="topic-grid">
+      <div class="topic" data-fact="Light travels at 3 × 10⁸ m/s in vacuum.">
+        <!-- Physics icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.071-7.071-1.414 1.414M6.343 17.657l-1.414 1.414m12.142 0-1.414-1.414M6.343 6.343 4.929 4.929"/>
+        </svg>
+        Physics
+      </div>
+      <div class="topic" data-fact="Water is called a universal solvent in chemistry.">
+        <!-- Chemistry icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M12 2L15 8l-3 6-3-6 3-6z"/>
+          <path d="M6 22h12"/>
+        </svg>
+        Chemistry
+      </div>
+      <div class="topic" data-fact="Mitochondria are called the powerhouse of the cell.">
+        <!-- Biology icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M8 15s1.5-1 4-1 4 1 4 1M8 9s1.5 1 4 1 4-1 4-1"/>
+        </svg>
+        Biology
+      </div>
+    </div>
+
+    <div class="fact-box" id="factBox">Click a topic to see a fact.</div>
+  </div>
+
+  <script>
+    const topics = document.querySelectorAll('.topic');
+    const factBox = document.getElementById('factBox');
+
+    topics.forEach(topic => {
+      topic.addEventListener('click', () => {
+        factBox.textContent = topic.dataset.fact;
+      });
+    });
+  </script>
+</body>
+</html>

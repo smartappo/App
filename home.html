@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Learn —</title>
+  <style>
+    :root{
+      --bg:#f6fbff; --card:#ffffff; --accent:#ff7aa2; --accent2:#6ec6ff; --text:#223;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family: 'Segoe UI', system-ui, -apple-system, Roboto, 'Noto Sans', sans-serif;background:linear-gradient(180deg,var(--bg),#e9f7ff);color:var(--text)}
+    .app{max-width:900px;margin:12px auto;padding:12px}
+    header{display:flex;align-items:center;gap:12px}
+    .logo{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;box-shadow:0 8px 20px rgba(22,48,80,0.08)}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:4px 0 12px;color:#375}
+
+    .card{background:var(--card);border-radius:18px;padding:14px;box-shadow:0 6px 18px rgba(30,60,100,0.06);}
+
+    /* grid of 10 big buttons */
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .btn-card{display:flex;flex-direction:column;align-items:flex-start;padding:14px;border-radius:14px;cursor:pointer;transition:transform .18s ease,box-shadow .18s;position:relative;overflow:hidden}
+    .btn-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(20,60,100,0.08)}
+    .btn-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;font-weight:700}
+    .btn-title{font-size:16px;margin:0 0 6px}
+    .btn-sub{font-size:12px;color:#406}
+
+    /* different gradients for each */
+    .g1{background:linear-gradient(135deg,#ffd29e,#ff7aa2);color:#3b1b1b}
+    .g2{background:linear-gradient(135deg,#c1f7ff,#6ec6ff);color:#033}
+    .g3{background:linear-gradient(135deg,#cde6ff,#b9fbc0);color:#193}
+    .g4{background:linear-gradient(135deg,#f6d6ff,#ffc9f2);color:#3b003b}
+    .g5{background:linear-gradient(135deg,#ffe9a8,#ffd6a5);color:#332200}
+    .g6{background:linear-gradient(135deg,#e2f0ff,#bfe9ff);color:#003247}
+    .g7{background:linear-gradient(135deg,#d7ffd9,#b5ffec);color:#013022}
+    .g8{background:linear-gradient(135deg,#ffe6f0,#ffd7db);color:#3b0022}
+    .g9{background:linear-gradient(135deg,#fef6c5,#ffe7a8);color:#433200}
+    .g10{background:linear-gradient(135deg,#e7e7ff,#cdd4ff);color:#20204a}
+
+    /* footer nav */
+    .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:calc(100% - 40px);max-width:900px;display:flex;justify-content:space-between;background:rgba(255,255,255,0.95);padding:8px;border-radius:16px;box-shadow:0 12px 24px rgba(20,60,100,0.08);}
+    .nav-item{flex:1;text-align:center;padding:10px 6px;border-radius:10px;cursor:pointer}
+    .nav-item.active{background:linear-gradient(90deg,rgba(110,198,255,0.12),rgba(255,122,162,0.06))}
+
+    /* responsive */
+    @media(min-width:700px){
+      .grid{grid-template-columns:repeat(5,1fr)}
+      .btn-card{align-items:center;text-align:center}
+      .btn-sub{display:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="logo">¡Π¡</div>
+      <div>
+        <h1> Smart Learn</h1>
+        <p class="lead">Arun &amp; WIDA PLATFORM</p>
+      </div>
+    </header>
+    <main class="card">
+      <h2 style="margin-top:0">अपने मन पसन्द विषय चुनें !</h2>
+      <div class="grid">
+        <div class="btn-card g1" data-page="hindi"><div class="btn-icon">🪄</div><div class="btn-title">Hindi</div><div class="btn-sub">कहानी, वर्णमाला</div></div>
+        <div class="btn-card g2" data-page="english"><div class="btn-icon">📄</div><div class="btn-title">English</div><div class="btn-sub">Alphabet, words</div></div>
+        <div class="btn-card g3" data-page="math"><div class="btn-icon">➗</div><div class="btn-title">Math</div><div class="btn-sub">Numbers &amp; games</div></div>
+        <div class="btn-card g4" data-page="science"><div class="btn-icon">🔬</div><div class="btn-title">Science</div><div class="btn-sub">Fun experiments</div></div>
+        <div class="btn-card g5" data-page="test"><div class="btn-icon">📝</div><div class="btn-title">Test</div><div class="btn-sub">Short quizzes</div></div>
+        <div class="btn-card g6" data-page="mocktest"><div class="btn-icon">🎯</div><div class="btn-title">Mock-Test</div><div class="btn-sub">Practice</div></div>
+        <div class="btn-card g7" data-page="download"><div class="btn-icon">⬇️</div><div class="btn-title">Download</div><div class="btn-sub">Offline resources</div></div>
+        <div class="btn-card g8" data-page="learnall"><div class="btn-icon">🌍</div><div class="btn-title">Learn All Language</div><div class="btn-sub">Multiple languages</div></div>
+        <div class="btn-card g9" data-page="solution"><div class="btn-icon">✅</div><div class="btn-title">Solution</div><div class="btn-sub">Answers</div></div>
+        <div class="btn-card g10" data-page="enjoy"><div class="btn-icon">🎉</div><div class="btn-title">Enjoy</div><div class="btn-sub">Songs &amp; games</div></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" data-nav="home">Home</div>
+    <div class="nav-item" data-nav="learning">Learning</div>
+    <div class="nav-item" data-nav="account">Account</div>
+  </nav>
+
+  <script>
+    // Subject buttons → external pages
+    const gridBtns = document.querySelectorAll('.btn-card');
+    const pageLinks = {
+      hindi: "hindi.html",
+      english: "english.html",
+      math: "math.html",
+      science: "science.html",
+      test: "test.html",
+      mocktest: "mock-test.html",
+      download: "download.html",
+      learnall: "learn-all-language.html",
+      solution: "solution.html",
+      enjoy: "enjoy.html"
+    };
+
+    gridBtns.forEach(b => b.addEventListener('click', () => {
+      const page = b.dataset.page;
+      if (pageLinks[page]) {
+        window.location.href = pageLinks[page];
+      }
+    }));
+
+    // Bottom nav → external pages
+    const navItems = document.querySelectorAll('.nav-item');
+    const navLinks = {
+      home: "home.html",
+      learning: "learning.html",
+      account: "account.html"
+    };
+
+    navItems.forEach(n => n.addEventListener('click', () => {
+      const dest = n.dataset.nav;
+      if (navLinks[dest]) {
+        window.location.href = navLinks[dest];
+      }
+    }));
+
+    // Keyboard shortcuts
+    const mapping = [
+      "hindi.html",        // 1
+      "english.html",      // 2
+      "math.html",         // 3
+      "science.html",      // 4
+      "test.html",         // 5
+      "mock-test.html",    // 6
+      "download.html",     // 7
+      "learn-all-language.html", // 8
+      "solution.html",     // 9
+      "enjoy.html"         // 0
+    ];
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key >= '0' && e.key <= '9') {
+        let index = parseInt(e.key, 10);
+        if (index === 0) index = 10;
+        const page = mapping[index - 1];
+        if (page) window.location.href = page;
+      }
+    });
+  </script>
+</body>
+</html>

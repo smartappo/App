@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enjoy Games</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: linear-gradient(180deg, #f6fbff, #e9f7ff);
+    color: #223;
+    text-align: center;
+    padding: 20px;
+  }
+  h1 {
+    margin-bottom: 20px;
+  }
+  .games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    max-width: 800px;
+    margin: auto;
+  }
+  .game-btn {
+    padding: 20px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .game-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+  .bottom-nav {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.95);
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 40px);
+    max-width: 900px;
+    padding: 8px;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(20,60,100,0.08);
+  }
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px 6px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .nav-item.active {
+    background: linear-gradient(90deg, rgba(110,198,255,0.12), rgba(255,122,162,0.06));
+  }
+</style>
+</head>
+<body>
+
+<h1>🎮 मजेदार गेम चुनें</h1>
+<div class="games">
+  <div class="game-btn" data-game="memory-game.html">🧠 Memory Game</div>
+  <div class="game-btn" data-game="ludo.html">🎲 Ludo</div>
+  <div class="game-btn" data-game="quiz.html">📝 Quiz Game</div>
+  <div class="game-btn" data-game="snake.html">🐍 Snake Game</div>
+  <div class="game-btn" data-game="tic-tac-toe.html">❌⭕ Tic Tac Toe</div>
+  <div class="game-btn" data-game="puzzle.html">🧩 Puzzle Game</div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <div class="nav-item" data-nav="home.html">Home</div>
+  <div class="nav-item" data-nav="learning.html">Learning</div>
+  <div class="nav-item active" data-nav="enjoy.html">Enjoy</div>
+</nav>
+
+<script>
+  document.querySelectorAll(".game-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      window.location.href = btn.dataset.game;
+    });
+  });
+
+  document.querySelectorAll(".nav-item").forEach(nav => {
+    nav.addEventListener("click", () => {
+      window.location.href = nav.dataset.nav;
+    });
+  });
+</script>
+
+</body>
+</html>

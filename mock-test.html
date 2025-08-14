@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mock Test - Smart Learn</title>
+  <style>
+    :root{
+      --bg:#f7fbff; --card:#ffffff; --accent:#6ec6ff; --accent2:#ff7aa2; --text:#123;
+      --ok:#2e7d32; --bad:#c62828;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family: 'Segoe UI',system-ui,Roboto,'Noto Sans',sans-serif;background:linear-gradient(180deg,var(--bg),#eef7ff);color:var(--text);padding:12px}
+    .wrap{max-width:900px;margin:8px auto}
+    header{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+    .back{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.06);text-decoration:none;color:var(--text)}
+    .logo{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    h1{font-size:18px;margin:0}
+    .card{background:var(--card);border-radius:14px;padding:14px;box-shadow:0 8px 20px rgba(20,60,100,0.06)}
+    .levels{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+    .level-btn{padding:10px 12px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.06);cursor:pointer}
+    .level-btn.active{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border-color:transparent}
+    .controls{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:10px;flex-wrap:wrap}
+    .timer{font-weight:700}
+    .start-btn{padding:8px 12px;border-radius:10px;background:#2b8cff;color:#fff;border:none;cursor:pointer}
+    .q-area{margin-top:14px}
+    .question{background:#fbfeff;padding:12px;border-radius:10px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,0.04)}
+    .options label{display:block;padding:8px;border-radius:8px;margin:6px 0;border:1px solid #e6eef8;cursor:pointer;background:#fff}
+    .navs{display:flex;gap:8px;justify-content:flex-end;margin-top:8px}
+    .btn{padding:8px 10px;border-radius:8px;border:none;cursor:pointer}
+    .btn.secondary{background:#fff;border:1px solid rgba(0,0,0,0.06)}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff}
+    .result{margin-top:12px;padding:12px;border-radius:10px;background:#fff}
+    .review .correct{border-left:6px solid var(--ok);padding-left:8px}
+    .review .wrong{border-left:6px solid var(--bad);padding-left:8px}
+    .meta{font-size:13px;color:#456;margin-top:6px}
+    @media(min-width:700px){ .levels{gap:12px} .controls{gap:20px} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="back" href="home.html" aria-label="Back to home">
+        <!-- Offline back arrow SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M15 8a.5.5 0 0 1-.5.5H2.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8z"/>
+        </svg>
+        Back
+      </a>
+      <div class="logo">M</div>
+      <div style="flex:1">
+        <h1>Mock Test</h1>
+        <div class="meta">Choose level: Class 10, Class 12 or Polytechnic — timed mocks for practice.</div>
+      </div>
+    </header>
+
+    <div class="card">
+      <div>
+        <div class="levels" role="tablist" aria-label="Select level">
+          <button class="level-btn active" data-level="class10">Class 10</button>
+          <button class="level-btn" data-level="class12">Class 12</button>
+          <button class="level-btn" data-level="poly">Polytechnic</button>
+        </div>
+
+        <div class="controls">
+          <div>
+            <label for="duration">Duration (minutes):</label>
+            <select id="duration" style="padding:8px;border-radius:8px;border:1px solid #e6eef8">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+
+          <div class="timer" aria-live="polite">Time: <span id="timeDisplay">--:--</span></div>
+
+          <div style="display:flex;gap:8px">
+            <button id="startBtn" class="start-btn">Start Mock</button>
+            <button id="endBtn" class="btn secondary" style="display:none">End Early</button>
+          </div>
+        </div>
+
+        <div class="q-area" id="qArea" aria-live="polite" style="display:none">
+          <!-- Question content injected by JS -->
+        </div>
+
+        <div class="navs" style="display:none" id="navs">
+          <div style="margin-right:auto" id="qCounter">Q <span id="curQ">1</span> of <span id="totalQ">1</span></div>
+          <div>
+            <button id="prevBtn" class="btn secondary">Previous</button>
+            <button id="nextBtn" class="btn secondary">Next</button>
+            <button id="submitBtn" class="btn primary">Submit</button>
+          </div>
+        </div>
+
+        <div id="result" style="display:none" class="result" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* Demo question sets for each level. Replace/expand as needed. 
+   Structure: { text: 'Q', options: ['a','b','c','d'], answer: 1 } // index of correct option
+*/
+const questionSets = {
+  class10: [
+    { text: "Physics: What is the unit of force?", options: ["Joule","Newton","Watt","Pascal"], answer: 1 },
+    { text: "Chemistry: Water formula is?", options: ["H2O","CO2","O2","H2"], answer: 0 },
+    { text: "Math: LCM of 6 and 8?", options: ["12","24","48","14"], answer: 1 }
+  ],
+  class12: [
+    { text: "Physics: Which law explains relation between current and voltage?", options: ["Ohm's Law","Hooke's Law","Newton's Law","Faraday Law"], answer: 0 },
+    { text: "Chemistry: pH of neutral water at 25°C?", options: ["7","0","14","1"], answer: 0 },
+    { text: "Math: Integral of 1/x dx is?", options: ["ln|x| + C","x^2/2","e^x","sin x"], answer: 0 },
+    { text: "Biology: DNA full form?", options: ["Deoxyribonucleic Acid","Ribonucleic Acid","Deoxyribose Acid","None"], answer: 0 }
+  ],
+  poly: [
+    { text: "Engg: Which material is best conductor?", options: ["Copper","Rubber","Glass","Wood"], answer: 0 },
+    { text: "Electronics: TTL stands for?", options: ["Transistor–Transistor Logic","Time-Triggered Link","True Type Logic","Thermal Transfer Line"], answer: 0 },
+    { text: "Math: Binary of decimal 10?", options: ["1010","1001","1110","0101"], answer: 0 }
+  ]
+};
+
+let currentLevel = 'class10';
+let durationMin = 10;
+let timer = null;
+let timeLeft = 0;
+let currentIndex = 0;
+let userAnswers = [];
+let currentSet = [];
+const qArea = document.getElementById('qArea');
+const timeDisplay = document.getElementById('timeDisplay');
+const startBtn = document.getElementById('startBtn');
+const endBtn = document.getElementById('endBtn');
+const navs = document.getElementById('navs');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resultBox = document.getElementById('result');
+const durationSelect = document.getElementById('duration');
+
+document.querySelectorAll('.level-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.level-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    currentLevel = b.dataset.level;
+    // save selection optionally
+    localStorage.setItem('mock_last_level', currentLevel);
+  });
+});
+
+// load saved last level
+const savedLevel = localStorage.getItem('mock_last_level');
+if(savedLevel && document.querySelector(`.level-btn[data-level="${savedLevel}"]`)){
+  document.querySelectorAll('.level-btn').forEach(x=>x.classList.remove('active'));
+  document.querySelector(`.level-btn[data-level="${savedLevel}"]`).classList.add('active');
+  currentLevel = savedLevel;
+}
+
+// duration change
+durationSelect.addEventListener('change', ()=> durationMin = parseInt(durationSelect.value,10));
+
+// Start test
+startBtn.addEventListener('click', startTest);
+endBtn.addEventListener('click', endEarly);
+prevBtn.addEventListener('click', ()=> showQuestion(currentIndex-1));
+nextBtn.addEventListener('click', ()=> showQuestion(currentIndex+1));
+submitBtn.addEventListener('click', submitTest);
+
+function startTest(){
+  currentSet = JSON.parse(JSON.stringify(questionSets[currentLevel] || [])); // clone
+  if(!currentSet.length){ alert('Questions not available for this level.'); return; }
+  // init
+  userAnswers = new Array(currentSet.length).fill(null);
+  currentIndex = 0;
+  timeLeft = durationMin * 60;
+  qArea.style.display = 'block';
+  navs.style.display = 'flex';
+  startBtn.style.display = 'none';
+  endBtn.style.display = 'inline-block';
+  resultBox.style.display = 'none';
+  renderQuestion();
+  updateCounter();
+  // start timer
+  clearInterval(timer);
+  timer = setInterval(()=> {
+    timeLeft--;
+    updateTimerDisplay();
+    if(timeLeft <= 0){
+      clearInterval(timer);
+      alert('Time up! Submitting your test.');
+      submitTest();
+    }
+  },1000);
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay(){
+  let mm = Math.floor(timeLeft/60).toString().padStart(2,'0');
+  let ss = (timeLeft%60).toString().padStart(2,'0');
+  timeDisplay.textContent = `${mm}:${ss}`;
+}
+
+// End early
+function endEarly(){
+  if(!confirm('Are you sure you want to end the test early?')) return;
+  clearInterval(timer);
+  submitTest();
+}
+
+function renderQuestion(){
+  const q = currentSet[currentIndex];
+  qArea.innerHTML = `
+    <div class="question" role="group" aria-labelledby="qtext">
+      <div id="qtext" style="font-weight:700">${currentIndex+1}. ${escapeHtml(q.text)}</div>
+      <div class="options" style="margin-top:8px">
+        ${q.options.map((opt,i)=>`
+          <label>
+            <input type="radio" name="option" value="${i}" ${userAnswers[currentIndex]===i ? 'checked':''} /> ${escapeHtml(opt)}
+          </label>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  // attach change listeners for options
+  qArea.querySelectorAll('input[name="option"]').forEach(inp=>{
+    inp.addEventListener('change', (e)=>{
+      userAnswers[currentIndex] = parseInt(e.target.value,10);
+      // optional: autosave to localStorage
+      localStorage.setItem('mock_answers_'+currentLevel, JSON.stringify(userAnswers));
+    });
+  });
+  updateNavButtons();
+}
+
+function updateNavButtons(){
+  document.getElementById('curQ').textContent = currentIndex+1;
+  document.getElementById('totalQ').textContent = currentSet.length;
+  prevBtn.disabled = currentIndex === 0;
+  nextBtn.disabled = currentIndex === currentSet.length - 1;
+}
+
+function showQuestion(idx){
+  if(idx < 0 || idx >= currentSet.length) return;
+  currentIndex = idx;
+  renderQuestion();
+  updateCounter();
+}
+
+function updateCounter(){
+  // placeholder for any UI updates (already handled in updateNavButtons)
+}
+
+// Submit and scoring
+function submitTest(){
+  clearInterval(timer);
+  // compute score
+  let total = currentSet.length;
+  let score = 0;
+  let reviewHtml = '<div class="review">';
+  currentSet.forEach((q, i) => {
+    const user = userAnswers[i];
+    const correct = q.answer;
+    const isCorrect = user === correct;
+    if(isCorrect) score++;
+    reviewHtml += `<div class="${isCorrect ? 'correct' : 'wrong'}" style="margin-bottom:8px;padding:8px;background:#fafafa;border-radius:8px">
+      <div style="font-weight:700">${i+1}. ${escapeHtml(q.text)}</div>
+      <div style="margin-top:6px">Your answer: ${user===null ? '<em>Not answered</em>' : escapeHtml(q.options[user])}</div>
+      <div style="margin-top:4px;color:${isCorrect? 'var(--ok)': 'var(--bad)'}">Correct answer: ${escapeHtml(q.options[correct])}</div>
+    </div>`;
+  });
+  reviewHtml += '</div>';
+  // show results
+  resultBox.style.display = 'block';
+  resultBox.innerHTML = `<div style="font-size:18px;font-weight:700">Score: ${score} / ${total}</div>
+    <div class="meta">Percentage: ${(score/total*100).toFixed(1)}%</div>
+    <div style="margin-top:10px">${reviewHtml}</div>`;
+  // hide question area and navs
+  qArea.style.display = 'none';
+  navs.style.display = 'none';
+  startBtn.style.display = 'inline-block';
+  endBtn.style.display = 'none';
+  // save last result
+  const lastResult = { level: currentLevel, score, total, timestamp: Date.now() };
+  localStorage.setItem('mock_last_result', JSON.stringify(lastResult));
+  // store scores per level optionally
+  const historyKey = 'mock_history_'+currentLevel;
+  let hist = JSON.parse(localStorage.getItem(historyKey) || '[]');
+  hist.unshift(lastResult);
+  if(hist.length > 10) hist.pop();
+  localStorage.setItem(historyKey, JSON.stringify(hist));
+}
+
+// utility: escape HTML
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; });
+}
+
+// load last result badge (if exists)
+(function loadLast(){
+  const last = localStorage.getItem('mock_last_result');
+  if(last){
+    try{
+      const obj = JSON.parse(last);
+      const preview = document.createElement('div');
+      preview.className = 'meta';
+      preview.style.marginTop = '8px';
+      const d = new Date(obj.timestamp);
+      preview.innerHTML = `Last: ${obj.level.replace(/class/,'Class ').toUpperCase()} — ${obj.score}/${obj.total} — ${d.toLocaleString()}`;
+      document.querySelector('.card > div').insertBefore(preview, document.querySelector('.card > div').children[1]);
+    }catch(e){}
+  }
+})();
+
+</script>
+</body>
+</html>

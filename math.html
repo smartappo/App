@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math - Polytechnic  question</title>
+  <style>
+    body{font-family:'Segoe UI',sans-serif;margin:0;padding:16px;background:#f9fbff;color:#223;}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+    .back-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#fff;border:1px solid #ccc;border-radius:12px;cursor:pointer;text-decoration:none;color:#223;}
+    .logo{width:40px;height:40px;background:linear-gradient(135deg,#6ec6ff,#ff7aa2);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;}
+    h1{margin:0;}
+    .content{margin-top:12px;}
+    .card{background:#fff;padding:14px;margin-bottom:16px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+    h2{margin:0 0 10px;font-size:18px;color:#333}
+    .question{margin-bottom:10px;font-weight:600}
+    .options button{display:block;width:100%;margin:4px 0;padding:8px;border:1px solid #ccc;border-radius:8px;background:#f6f9ff;cursor:pointer;text-align:left}
+    .options button.correct{background:#d4f8d4;border-color:#28a745;color:#155724}
+    .options button.wrong{background:#f8d7da;border-color:#dc3545;color:#721c24}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="home.html" class="back-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 1-.5.5H2.707l4.147 4.146a.5.5 0 0 1-.708.708l-5-5a.5.5 0 0 1 0-.708l5-5a.5.5 0 0 1 .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8z"/>
+      </svg>
+      Back
+    </a>
+    <div class="logo">M</div>
+    <h4>Math polytechnic Question</h4>
+  </header>
+
+  <div class="content">
+
+    <!-- Algebra -->
+    <div class="card">
+      <h2>Algebra (बीजगणित)</h2>
+      <div class="question">Q1. If (x + 1)² = 25, then x = ?</div>
+      <div class="options">
+        <button onclick="check(this,false)">2 or -2</button>
+        <button onclick="check(this,true)">4 or -6</button>
+        <button onclick="check(this,false)">5 or -5</button>
+        <button onclick="check(this,false)">None</button>
+      </div>
+    </div>
+
+    <!-- Geometry -->
+    <div class="card">
+      <h2>Geometry (ज्यामिति)</h2>
+      <div class="question">Q2. Area of a triangle with base 10 cm and height 6 cm?</div>
+      <div class="options">
+        <button onclick="check(this,false)">20 cm²</button>
+        <button onclick="check(this,true)">30 cm²</button>
+        <button onclick="check(this,false)">60 cm²</button>
+        <button onclick="check(this,false)">40 cm²</button>
+      </div>
+    </div>
+
+    <!-- Trigonometry -->
+    <div class="card">
+      <h2>Trigonometry (त्रिकोणमिति)</h2>
+      <div class="question">Q3. Value of sin²θ + cos²θ = ?</div>
+      <div class="options">
+        <button onclick="check(this,false)">0</button>
+        <button onclick="check(this,true)">1</button>
+        <button onclick="check(this,false)">2</button>
+        <button onclick="check(this,false)">Depends on θ</button>
+      </div>
+    </div>
+
+    <!-- Mensuration -->
+    <div class="card">
+      <h2>Mensuration (क्षेत्रमिति)</h2>
+      <div class="question">Q4. Volume of a sphere of radius 7 cm? (π = 22/7)</div>
+      <div class="options">
+        <button onclick="check(this,true)">1436 cm³</button>
+        <button onclick="check(this,false)">1078 cm³</button>
+        <button onclick="check(this,false)">1540 cm³</button>
+        <button onclick="check(this,false)">1400 cm³</button>
+      </div>
+    </div>
+
+    <!-- Simplification -->
+    <div class="card">
+      <h2>Simplification (सरलीकरण)</h2>
+      <div class="question">Q5. (25 × 25 – 15 × 15) = ?</div>
+      <div class="options">
+        <button onclick="check(this,false)">100</button>
+        <button onclick="check(this,true)">400</button>
+        <button onclick="check(this,false)">300</button>
+        <button onclick="check(this,false)">200</button>
+      </div>
+    </div>
+
+    <!-- Probability -->
+    <div class="card">
+      <h2>Probability (प्रायिकता)</h2>
+      <div class="question">Q6. Probability of getting a head when a coin is tossed?</div>
+      <div class="options">
+        <button onclick="check(this,false)">1/3</button>
+        <button onclick="check(this,true)">1/2</button>
+        <button onclick="check(this,false)">1</button>
+        <button onclick="check(this,false)">0</button>
+      </div>
+    </div>
+
+    <!-- Quadratic -->
+    <div class="card">
+      <h2>Quadratic Equation (द्विघात समीकरण)</h2>
+      <div class="question">Q7. Roots of x² – 5x + 6 = 0 are:</div>
+      <div class="options">
+        <button onclick="check(this,false)">1, 5</button>
+        <button onclick="check(this,true)">2, 3</button>
+        <button onclick="check(this,false)">–2, –3</button>
+        <button onclick="check(this,false)">No real roots</button>
+      </div>
+    </div>
+
+    <!-- More questions can be added in same format -->
+    
+  </div>
+
+  <script>
+    function check(btn,isCorrect){
+      let parent = btn.parentElement;
+      Array.from(parent.children).forEach(b=>b.disabled=true);
+      if(isCorrect){
+        btn.classList.add("correct");
+      } else {
+        btn.classList.add("wrong");
+      }
+    }
+  </script>
+</body>
+</html>

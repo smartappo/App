@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Learn All Languages - Smart Model</title>
+<style>
+:root{
+  --bg:#f6fbff; --card:#ffffff; --accent:#ff7aa2; --accent2:#6ec6ff; --text:#223;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(180deg,var(--bg),#e9f7ff);color:var(--text);padding-bottom:90px}
+header{padding:16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);background:#fff;position:sticky;top:0;z-index:99}
+.logo{width:50px;height:50px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px}
+h1{font-size:20px}
+p.lead{color:#375;font-size:14px}
+
+.search-box{padding:12px}
+.search-input{width:100%;padding:12px;border-radius:12px;border:1px solid #ccc;font-size:14px}
+
+.lang-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:14px;padding:14px}
+.lang-card{background:var(--card);border-radius:14px;padding:14px;text-align:center;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,0.06);transition:0.25s;position:relative;overflow:hidden}
+.lang-card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.12)}
+.flag{font-size:34px;margin-bottom:8px}
+.lang-name{font-weight:600;font-size:16px}
+.lang-sub{font-size:12px;color:#555}
+
+/* Popup */
+.popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:1000}
+.popup{background:#fff;border-radius:16px;max-width:320px;width:90%;padding:20px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+.popup h2{margin-bottom:10px}
+.popup p{font-size:14px;margin-bottom:18px;color:#444}
+.popup button{padding:10px 16px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:bold;cursor:pointer}
+
+/* Bottom Nav */
+.bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:calc(100% - 40px);max-width:900px;display:flex;justify-content:space-between;background:rgba(255,255,255,0.96);padding:8px;border-radius:16px;box-shadow:0 12px 24px rgba(20,60,100,0.08);}
+.nav-item{flex:1;text-align:center;padding:10px 6px;border-radius:10px;cursor:pointer;font-size:14px}
+.nav-item.active{background:linear-gradient(90deg,rgba(110,198,255,0.12),rgba(255,122,162,0.06))}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🌍</div>
+  <div>
+    <h1>Learn All Languages</h1>
+    <p class="lead">Start with Hindi & English, Unlock All</p>
+  </div>
+</header>
+
+<div class="search-box">
+  <input type="text" id="search" class="search-input" placeholder="Search language...">
+</div>
+
+<div class="lang-grid" id="langGrid">
+  <div class="lang-card" data-page="lang-hindi.html"><div class="flag">🇮🇳</div><div class="lang-name">Hindi</div><div class="lang-sub">भारत</div></div>
+  <div class="lang-card" data-page="lang-english.html"><div class="flag">🇬🇧</div><div class="lang-name">English</div><div class="lang-sub">UK/US</div></div>
+  <div class="lang-card locked" data-page="lang-spanish.html"><div class="flag">🇪🇸</div><div class="lang-name">Spanish</div><div class="lang-sub">España</div></div>
+  <div class="lang-card locked" data-page="lang-french.html"><div class="flag">🇫🇷</div><div class="lang-name">French</div><div class="lang-sub">France</div></div>
+  <div class="lang-card locked" data-page="lang-chinese.html"><div class="flag">🇨🇳</div><div class="lang-name">Chinese</div><div class="lang-sub">中文</div></div>
+  <div class="lang-card locked" data-page="lang-japanese.html"><div class="flag">🇯🇵</div><div class="lang-name">Japanese</div><div class="lang-sub">日本語</div></div>
+  <div class="lang-card locked" data-page="lang-german.html"><div class="flag">🇩🇪</div><div class="lang-name">German</div><div class="lang-sub">Deutsch</div></div>
+  <div class="lang-card locked" data-page="lang-arabic.html"><div class="flag">🇸🇦</div><div class="lang-name">Arabic</div><div class="lang-sub">العربية</div></div>
+</div>
+
+<!-- Popup -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup">
+    <h2>Unlock All Languages</h2>
+    <p>पहले Hindi और English के बेसिक लेसन पूरे करें, फिर आप बाकी भाषाएँ सीख सकते हैं।</p>
+    <button onclick="closePopup()">OK, Start Now</button>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <div class="nav-item" data-nav="home">Home</div>
+  <div class="nav-item active" data-nav="learning"> Learning</div>
+  <div class="nav-item" data-nav="account"> Account</div>
+</nav>
+
+<script>
+// Search
+document.getElementById('search').addEventListener('input', function(){
+  let filter = this.value.toLowerCase();
+  document.querySelectorAll('.lang-card').forEach(card=>{
+    let name = card.querySelector('.lang-name').textContent.toLowerCase();
+    card.style.display = name.includes(filter) ? '' : 'none';
+  });
+});
+
+// Language click
+document.querySelectorAll('.lang-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    if(card.classList.contains('locked')){
+      document.getElementById('popupOverlay').style.display='flex';
+    } else {
+      window.location.href = card.dataset.page;
+    }
+  });
+});
+
+// Popup close
+function closePopup(){
+  document.getElementById('popupOverlay').style.display='none';
+}
+
+// Bottom nav
+const navLinks = {
+  home: "home.html",
+  learning: "learning.html",
+  account: "account.html"
+};
+document.querySelectorAll('.nav-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const dest = item.dataset.nav;
+    if(navLinks[dest]) window.location.href = navLinks[dest];
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Learn Hindi - Smart Learn</title>
+<style>
+  :root{
+    --accent:#ff7aa2; --accent2:#6ec6ff; --card:#fff; --bg:#f6fbff;
+  }
+  body{margin:0;font-family:'Segoe UI',sans-serif;background:var(--bg);color:#222;padding-bottom:90px}
+  header{background:linear-gradient(135deg,var(--accent),var(--accent2));padding:18px;color:#fff;text-align:center;border-bottom-left-radius:20px;border-bottom-right-radius:20px}
+  h1{margin:0;font-size:26px}
+  p.sub{margin:4px 0 0;font-size:14px;opacity:0.9}
+
+  .section{padding:14px}
+  .card{background:var(--card);padding:14px;margin-bottom:14px;border-radius:14px;box-shadow:0 4px 10px rgba(0,0,0,0.06)}
+  h2{margin-top:0;font-size:18px;color:#333}
+  .word{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eee;gap:6px;flex-wrap:wrap}
+  .en{flex:1;color:#555}
+  .hi{flex:1;font-weight:600}
+  button{background:var(--accent2);border:none;padding:4px 8px;border-radius:8px;color:#fff;cursor:pointer}
+  button:active{transform:scale(0.95)}
+
+  /* Practice box */
+  .practice{margin-top:10px}
+  textarea{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;resize:none;font-size:14px}
+  .check-btn{margin-top:8px;width:100%;background:var(--accent);color:#fff;padding:10px;border:none;border-radius:8px;cursor:pointer;font-size:14px}
+
+  /* Bottom nav */
+  .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:calc(100% - 40px);max-width:900px;display:flex;justify-content:space-between;background:rgba(255,255,255,0.95);padding:8px;border-radius:16px;box-shadow:0 12px 24px rgba(20,60,100,0.08);}
+  .nav-item{flex:1;text-align:center;padding:10px 6px;border-radius:10px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🇮🇳 Learn Hindi</h1>
+  <p class="sub">English to Hindi - From Basic to Advanced</p>
+</header>
+
+<div class="section">
+  <!-- Alphabet -->
+  <div class="card">
+    <h2>Hindi Alphabet (वर्णमाला)</h2>
+    <p>अ आ इ ई उ ऊ ए ऐ ओ औ अं अः  
+    क ख ग घ ङ | च छ ज झ ञ | ट ठ ड ढ ण  
+    त थ द ध न | प फ ब भ म | य र ल व | श ष स ह</p>
+    <button onclick="speak('अ आ इ ई उ ऊ ए ऐ ओ औ अं अः क ख ग घ ङ च छ ज झ ञ ट ठ ड ढ ण त थ द ध न प फ ब भ म य र ल व श ष स ह')">🔊 Listen</button>
+  </div>
+
+  <!-- Numbers -->
+  <div class="card">
+    <h2>Numbers (संख्या)</h2>
+    <div class="word"><span class="en">One</span> <span class="hi">एक</span> <button onclick="speak('एक')">🔊</button></div>
+    <div class="word"><span class="en">Two</span> <span class="hi">दो</span> <button onclick="speak('दो')">🔊</button></div>
+    <div class="word"><span class="en">Three</span> <span class="hi">तीन</span> <button onclick="speak('तीन')">🔊</button></div>
+    <div class="word"><span class="en">Four</span> <span class="hi">चार</span> <button onclick="speak('चार')">🔊</button></div>
+  </div>
+
+  <!-- Basic Words -->
+  <div class="card">
+    <h2>Basic Words</h2>
+    <div class="word"><span class="en">Hello</span> <span class="hi">नमस्ते</span> <button onclick="speak('नमस्ते')">🔊</button></div>
+    <div class="word"><span class="en">Thank you</span> <span class="hi">धन्यवाद</span> <button onclick="speak('धन्यवाद')">🔊</button></div>
+    <div class="word"><span class="en">Yes</span> <span class="hi">हाँ</span> <button onclick="speak('हाँ')">🔊</button></div>
+    <div class="word"><span class="en">No</span> <span class="hi">नहीं</span> <button onclick="speak('नहीं')">🔊</button></div>
+  </div>
+
+  <!-- Daily Phrases -->
+  <div class="card">
+    <h2>Daily Phrases</h2>
+    <div class="word"><span class="en">How are you?</span> <span class="hi">आप कैसे हैं?</span> <button onclick="speak('आप कैसे हैं?')">🔊</button></div>
+    <div class="word"><span class="en">I am fine</span> <span class="hi">मैं ठीक हूँ</span> <button onclick="speak('मैं ठीक हूँ')">🔊</button></div>
+    <div class="word"><span class="en">What is your name?</span> <span class="hi">आपका नाम क्या है?</span> <button onclick="speak('आपका नाम क्या है?')">🔊</button></div>
+    <div class="word"><span class="en">My name is...</span> <span class="hi">मेरा नाम ... है</span> <button onclick="speak('मेरा नाम है')">🔊</button></div>
+  </div>
+
+  <!-- Practice Section -->
+  <div class="card">
+    <h2>Practice Writing</h2>
+    <p>Translate into Hindi: <b>"Good Morning"</b></p>
+    <div class="practice">
+      <textarea id="answer" rows="2" placeholder="Type your answer here..."></textarea>
+      <button class="check-btn" onclick="checkAnswer()">Check Answer</button>
+      <p id="result"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <div class="nav-item" onclick="window.location.href='learn-all-language.html'">⬅ Back</div>
+  <div class="nav-item" onclick="window.location.href='lang-english.html'">Next ➡</div>
+</nav>
+
+<script>
+  function speak(text){
+    let utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "hi-IN";
+    speechSynthesis.speak(utter);
+  }
+
+  function checkAnswer(){
+    let ans = document.getElementById('answer').value.trim();
+    let correct = "सुप्रभात";
+    let res = document.getElementById('result');
+    if(ans === correct){
+      res.innerHTML = "✅ Correct! Well done.";
+      res.style.color = "green";
+    } else {
+      res.innerHTML = "❌ Incorrect. The correct answer is: " + correct;
+      res.style.color = "red";
+    }
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz Game</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: linear-gradient(180deg, #f6fbff, #e9f7ff);
+    text-align: center;
+    padding: 10px;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .back-btn {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: auto;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+  h1 { flex: 1; margin: 0; }
+  .question {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+  .option {
+    background: white;
+    margin: 6px auto;
+    padding: 10px;
+    max-width: 300px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    transition: background 0.3s;
+  }
+  .option.correct { background: #b6f7b6; }
+  .option.wrong { background: #f7b6b6; }
+  .score {
+    font-size: 16px;
+    margin-top: 12px;
+  }
+  .bottom-nav {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.95);
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 40px);
+    max-width: 900px;
+    padding: 8px;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(20,60,100,0.08);
+  }
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px 6px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="window.location.href='enjoy.html'">⬅ Back</button>
+  <h1>📝 Quiz Game</h1>
+</header>
+
+<div id="quizContainer">
+  <div class="question" id="question"></div>
+  <div id="options"></div>
+  <div class="score">Score: <span id="score">0</span></div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <div class="nav-item" data-nav="home.html">Home</div>
+  <div class="nav-item" data-nav="learning.html">Learning</div>
+  <div class="nav-item" data-nav="enjoy.html">Enjoy</div>
+</nav>
+
+<script>
+const quizData = [
+  { q: "भारत की राजधानी क्या है?", options: ["दिल्ली", "मुंबई", "कोलकाता", "चेन्नई"], answer: 0 },
+  { q: "पानी का रासायनिक सूत्र क्या है?", options: ["CO2", "H2O", "O2", "NaCl"], answer: 1 },
+  { q: "कौन सा ग्रह 'लाल ग्रह' कहलाता है?", options: ["पृथ्वी", "मंगल", "शुक्र", "बृहस्पति"], answer: 1 },
+  { q: "भारत का राष्ट्रीय पक्षी?", options: ["मोर", "तोता", "कबूतर", "बाज"], answer: 0 },
+  { q: "√64 का मान क्या है?", options: ["6", "7", "8", "9"], answer: 2 }
+];
+let currentQ = 0;
+let score = 0;
+
+function loadQuestion() {
+  if (currentQ >= quizData.length) {
+    document.getElementById("quizContainer").innerHTML = `<h2>🎉 क्विज़ खत्म! आपका स्कोर: ${score}/${quizData.length}</h2>`;
+    return;
+  }
+  const qData = quizData[currentQ];
+  document.getElementById("question").textContent = qData.q;
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+  qData.options.forEach((opt, index) => {
+    const btn = document.createElement("div");
+    btn.className = "option";
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(index);
+    optionsDiv.appendChild(btn);
+  });
+}
+function selectAnswer(index) {
+  const qData = quizData[currentQ];
+  const options = document.querySelectorAll(".option");
+  if (index === qData.answer) {
+    score++;
+    document.getElementById("score").textContent = score;
+    options[index].classList.add("correct");
+  } else {
+    options[index].classList.add("wrong");
+    options[qData.answer].classList.add("correct");
+  }
+  setTimeout(() => {
+    currentQ++;
+    loadQuestion();
+  }, 800);
+}
+document.querySelectorAll(".nav-item").forEach(nav => {
+  nav.addEventListener("click", () => {
+    window.location.href = nav.dataset.nav;
+  });
+});
+loadQuestion();
+</script>
+
+</body>
+</html>

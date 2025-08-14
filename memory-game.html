@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Game</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: linear-gradient(180deg, #f6fbff, #e9f7ff);
+    text-align: center;
+    padding: 20px;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .back-btn {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: auto;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+  h1 {
+    flex: 1;
+    margin: 0;
+  }
+  .stats {
+    font-size: 16px;
+    margin-bottom: 14px;
+  }
+  .game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    gap: 10px;
+    justify-content: center;
+    margin: auto;
+  }
+  .card {
+    width: 70px;
+    height: 70px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    font-size: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transform: rotateY(0);
+    transition: background 0.3s, transform 0.3s;
+  }
+  .card.flipped {
+    background: #ffecd2;
+  }
+  .bottom-nav {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.95);
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 40px);
+    max-width: 900px;
+    padding: 8px;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(20,60,100,0.08);
+  }
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px 6px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="window.location.href='enjoy.html'">⬅ Back</button>
+  <h1>🧠 Memory Game</h1>
+</header>
+
+<div class="stats">Moves: <span id="moves">0</span> | Score: <span id="score">0</span></div>
+<div class="game-board" id="gameBoard"></div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <div class="nav-item" data-nav="home.html">Home</div>
+  <div class="nav-item" data-nav="learning.html">Learning</div>
+  <div class="nav-item" data-nav="enjoy.html">Enjoy</div>
+</nav>
+
+<script>
+const emojis = ["🍎","🍌","🍇","🍉","🍒","🍍","🥝","🍓"];
+let cards = [...emojis, ...emojis];
+let flippedCards = [];
+let matchedCards = 0;
+let moves = 0;
+let score = 0;
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+function initGame() {
+  shuffle(cards);
+  const board = document.getElementById("gameBoard");
+  board.innerHTML = "";
+  cards.forEach((emoji, index) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.dataset.emoji = emoji;
+    card.dataset.index = index;
+    card.addEventListener("click", flipCard);
+    board.appendChild(card);
+  });
+}
+function flipCard() {
+  if (this.classList.contains("flipped") || flippedCards.length === 2) return;
+  this.classList.add("flipped");
+  this.textContent = this.dataset.emoji;
+  flippedCards.push(this);
+  if (flippedCards.length === 2) {
+    moves++;
+    document.getElementById("moves").textContent = moves;
+    if (flippedCards[0].dataset.emoji === flippedCards[1].dataset.emoji) {
+      score += 10;
+      document.getElementById("score").textContent = score;
+      flippedCards = [];
+      matchedCards += 2;
+      if (matchedCards === cards.length) {
+        setTimeout(() => alert("🎉 You Win! Score: " + score), 200);
+      }
+    } else {
+      setTimeout(() => {
+        flippedCards.forEach(card => {
+          card.classList.remove("flipped");
+          card.textContent = "";
+        });
+        flippedCards = [];
+      }, 800);
+    }
+  }
+}
+document.querySelectorAll(".nav-item").forEach(nav => {
+  nav.addEventListener("click", () => {
+    window.location.href = nav.dataset.nav;
+  });
+});
+initGame();
+</script>
+
+</body>
+</html>

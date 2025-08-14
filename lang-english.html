@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Learn English from Hindi - Smart Learn</title>
+<style>
+  :root{--bg:#f6fbff;--card:#fff;--accent:#6ec6ff;--accent2:#ff7aa2;--text:#222;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',sans-serif;background:linear-gradient(180deg,var(--bg),#e9f7ff);color:var(--text);padding-bottom:90px}
+  header{background:linear-gradient(135deg,var(--accent),var(--accent2));padding:18px;color:#fff;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,0.1)}
+  header h1{margin:0;font-size:24px}
+  header p{margin:4px 0 0;font-size:14px}
+  .section{padding:14px}
+  .card{background:var(--card);padding:14px;margin-bottom:16px;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+  h2{margin-top:0;font-size:18px;color:#333}
+  .list-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #eee}
+  .list-item:last-child{border-bottom:none}
+  button{background:var(--accent);border:none;padding:6px 10px;border-radius:8px;color:#fff;cursor:pointer;transition:0.2s}
+  button:hover{background:#4daee0}
+  .example{background:#f1f9ff;padding:8px;border-radius:8px;font-size:13px;margin-top:6px;color:#333}
+  .highlight{color:var(--accent2);font-weight:bold}
+  ul{margin:6px 0 0 18px}
+  /* Bottom Nav */
+  .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:calc(100% - 40px);max-width:900px;display:flex;justify-content:space-between;background:rgba(255,255,255,0.95);padding:8px;border-radius:16px;box-shadow:0 12px 24px rgba(20,60,100,0.08);}
+  .nav-item{flex:1;text-align:center;padding:10px 6px;border-radius:10px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🇬🇧 Learn English from Hindi</h1>
+  <p>Step-by-Step: From Zero to Fluent</p>
+</header>
+
+<div class="section">
+
+  <!-- Step 1: Alphabet -->
+  <div class="card">
+    <h2>Step 1: English Alphabet (अक्षर)</h2>
+    <div class="example">पहले अक्षर सीखें और उनका उच्चारण सुनें।</div>
+    <div class="list-item">A B C D E F G <button onclick="speak('A B C D E F G')">🔊</button></div>
+    <div class="list-item">H I J K L M N <button onclick="speak('H I J K L M N')">🔊</button></div>
+    <div class="list-item">O P Q R S T U <button onclick="speak('O P Q R S T U')">🔊</button></div>
+    <div class="list-item">V W X Y Z <button onclick="speak('V W X Y Z')">🔊</button></div>
+  </div>
+
+  <!-- Step 2: Basic Words -->
+  <div class="card">
+    <h2>Step 2: Basic Words (मूल शब्द)</h2>
+    <div class="example">हर शब्द को सुनें, दोहराएँ और हिंदी अर्थ समझें।</div>
+    <div class="list-item">Hello — नमस्ते <button onclick="speak('Hello')">🔊</button></div>
+    <div class="list-item">Thank you — धन्यवाद <button onclick="speak('Thank you')">🔊</button></div>
+    <div class="list-item">Please — कृपया <button onclick="speak('Please')">🔊</button></div>
+    <div class="list-item">Sorry — माफ़ कीजिए <button onclick="speak('Sorry')">🔊</button></div>
+  </div>
+
+  <!-- Step 3: Small Sentences -->
+  <div class="card">
+    <h2>Step 3: Short Sentences (छोटे वाक्य)</h2>
+    <div class="example">इन वाक्यों को रोज़ बोलने की आदत डालें।</div>
+    <div class="list-item">I am happy. — मैं खुश हूँ। <button onclick="speak('I am happy')">🔊</button></div>
+    <div class="list-item">You are my friend. — तुम मेरे दोस्त हो। <button onclick="speak('You are my friend')">🔊</button></div>
+    <div class="list-item">This is my book. — यह मेरी किताब है। <button onclick="speak('This is my book')">🔊</button></div>
+  </div>
+
+  <!-- Step 4: Daily Conversations -->
+  <div class="card">
+    <h2>Step 4: Daily Use Conversation (दैनिक बातचीत)</h2>
+    <div class="list-item">How are you? — आप कैसे हैं? <button onclick="speak('How are you?')">🔊</button></div>
+    <div class="example"><span class="highlight">Reply:</span> I am fine, thank you. — मैं ठीक हूँ, धन्यवाद।</div>
+    <div class="list-item">What is your name? — आपका नाम क्या है? <button onclick="speak('What is your name?')">🔊</button></div>
+    <div class="example"><span class="highlight">Reply:</span> My name is Rahul. — मेरा नाम राहुल है।</div>
+    <div class="list-item">Where are you from? — आप कहाँ से हैं? <button onclick="speak('Where are you from?')">🔊</button></div>
+    <div class="example"><span class="highlight">Reply:</span> I am from India. — मैं भारत से हूँ।</div>
+  </div>
+
+  <!-- Step 5: Practice Exercise -->
+  <div class="card">
+    <h2>Step 5: Practice (अभ्यास)</h2>
+    <ul>
+      <li>रोज़ 5 नए शब्द सीखें और बोलें।</li>
+      <li>आईने के सामने अंग्रेज़ी में बातें करने का अभ्यास करें।</li>
+      <li>फिल्में और गाने अंग्रेज़ी में सुनें, सबटाइटल्स के साथ।</li>
+      <li>गलती करने से डरें नहीं, ज़्यादा बोलें।</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <div class="nav-item" onclick="window.location.href='lang-hindi.html'">⬅ Hindi</div>
+  <div class="nav-item" onclick="window.location.href='learn-all-language.html'">🌍 All</div>
+  <div class="nav-item" onclick="window.location.href='lang-spanish.html'">Spanish ➡</div>
+</nav>
+
+<script>
+function speak(text){
+  let utter = new SpeechSynthesisUtterance(text);
+  utter.lang = "en-US";
+  speechSynthesis.speak(utter);
+}
+</script>
+
+</body>
+</html>

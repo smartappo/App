@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ludo Game</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    background: linear-gradient(180deg, #f6fbff, #e9f7ff);
+    text-align: center;
+    padding: 10px;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .back-btn {
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: auto;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+  h1 {
+    flex: 1;
+    margin: 0;
+  }
+  .board {
+    display: grid;
+    grid-template-columns: repeat(15, 20px);
+    grid-template-rows: repeat(15, 20px);
+    margin: auto;
+    border: 2px solid #555;
+    width: fit-content;
+    background: white;
+  }
+  .cell {
+    border: 1px solid #ccc;
+    width: 20px;
+    height: 20px;
+  }
+  .red { background: #ff4d4d; }
+  .green { background: #66cc66; }
+  .yellow { background: #ffeb3b; }
+  .blue { background: #4da6ff; }
+  .dice {
+    margin: 15px;
+    font-size: 22px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #ffecd2, #fcb69f);
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    border: none;
+  }
+  #diceResult {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .bottom-nav {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.95);
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 40px);
+    max-width: 900px;
+    padding: 8px;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(20,60,100,0.08);
+  }
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px 6px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="back-btn" onclick="window.location.href='enjoy.html'">⬅ Back</button>
+  <h1>🎲 Ludo Game</h1>
+</header>
+
+<div id="boardContainer"></div>
+<button class="dice" onclick="rollDice()">🎲 Roll Dice</button>
+<div id="diceResult">Roll to Start</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <div class="nav-item" data-nav="home.html">Home</div>
+  <div class="nav-item" data-nav="learning.html">Learning</div>
+  <div class="nav-item" data-nav="enjoy.html">Enjoy</div>
+</nav>
+
+<script>
+function createBoard() {
+  const board = document.createElement("div");
+  board.className = "board";
+  for (let i = 0; i < 225; i++) {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    if (i < 6*15 && i % 15 < 6) cell.classList.add("red");
+    if (i < 6*15 && i % 15 > 8) cell.classList.add("green");
+    if (i >= 9*15 && i % 15 < 6) cell.classList.add("yellow");
+    if (i >= 9*15 && i % 15 > 8) cell.classList.add("blue");
+    board.appendChild(cell);
+  }
+  document.getElementById("boardContainer").appendChild(board);
+}
+function rollDice() {
+  const roll = Math.floor(Math.random() * 6) + 1;
+  document.getElementById("diceResult").textContent = "You rolled: " + roll;
+}
+document.querySelectorAll(".nav-item").forEach(nav => {
+  nav.addEventListener("click", () => {
+    window.location.href = nav.dataset.nav;
+  });
+});
+createBoard();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Learn — Account</title>
+<style>
+:root{
+  --bg:#f6fbff; --card:#fff; --accent:#ff7aa2; --accent2:#6ec6ff; --text:#223;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(180deg,var(--bg),#e9f7ff);color:var(--text);}
+.app{max-width:500px;margin:20px auto 80px auto;padding:12px;} /* नीचे space nav bar के लिए */
+.card{background:var(--card);border-radius:18px;padding:16px;box-shadow:0 6px 18px rgba(0,0,0,0.06);text-align:center;}
+.profile-pic{width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:12px;border:3px solid var(--accent2)}
+.field{margin-bottom:12px;text-align:left;}
+.label{font-weight:600;margin-bottom:4px;display:block;}
+input{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;font-size:14px;}
+button{padding:10px 14px;border:none;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:600;cursor:pointer;}
+button:hover{opacity:0.9}
+.actions{margin-top:12px;display:flex;gap:10px;justify-content:center;}
+
+/* bottom navigation */
+.bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:calc(100% - 40px);max-width:900px;display:flex;justify-content:space-between;background:rgba(255,255,255,0.95);padding:8px;border-radius:16px;box-shadow:0 12px 24px rgba(20,60,100,0.08);}
+.nav-item{flex:1;text-align:center;padding:10px 6px;border-radius:10px;cursor:pointer}
+.nav-item.active{background:linear-gradient(90deg,rgba(110,198,255,0.12),rgba(255,122,162,0.06))}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="card" id="signupCard" style="display:none;">
+    <h2>Sign Up</h2>
+    <div class="field">
+      <label class="label">पूरा नाम</label>
+      <input type="text" id="name" placeholder="नाम दर्ज करें">
+    </div>
+    <div class="field">
+      <label class="label">ईमेल</label>
+      <input type="email" id="email" placeholder="your-name@example.com">
+    </div>
+    <div class="field">
+      <label class="label">फोन</label>
+      <input type="tel" id="phone" placeholder="10 अंकों का नंबर">
+    </div>
+    <div class="field">
+      <label class="label">पासवर्ड</label>
+      <input type="password" id="password" placeholder="पासवर्ड दर्ज करें">
+    </div>
+    <div class="field">
+      <label class="label">प्रोफ़ाइल फोटो URL</label>
+      <input type="text" id="picUrl" placeholder="https://example.com/photo.jpg">
+    </div>
+    <button id="saveSignup">सेव करें</button>
+  </div>
+
+  <div class="card" id="profileCard" style="display:none;">
+    <img src="" class="profile-pic" id="profilePic">
+    <h2 id="displayName"></h2>
+    <p id="displayEmail"></p>
+    <p id="displayPhone"></p>
+    <div class="actions">
+      <button id="editBtn">एडिट</button>
+      <button id="logoutBtn" style="background:#ff7a7a;">लॉगआउट</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav">
+  <div class="nav-item" data-nav="home">Home</div>
+  <div class="nav-item" data-nav="learning"> Learning</div>
+  <div class="nav-item active" data-nav="account">Account</div>
+</nav>
+
+<script>
+function showSignup(){
+  document.getElementById('signupCard').style.display='block';
+  document.getElementById('profileCard').style.display='none';
+}
+function showProfile(){
+  document.getElementById('signupCard').style.display='none';
+  document.getElementById('profileCard').style.display='block';
+}
+
+function loadProfile(){
+  const name=localStorage.getItem('acc_name');
+  const email=localStorage.getItem('acc_email');
+  const phone=localStorage.getItem('acc_phone');
+  const password=localStorage.getItem('acc_password');
+  const pic=localStorage.getItem('acc_pic');
+  if(name && email){
+    document.getElementById('displayName').innerText=name;
+    document.getElementById('displayEmail').innerText="📧 "+email;
+    document.getElementById('displayPhone').innerText="📞 "+phone;
+    document.getElementById('profilePic').src=pic || "https://via.placeholder.com/100";
+    showProfile();
+  } else {
+    showSignup();
+  }
+}
+
+document.getElementById('saveSignup').addEventListener('click',()=>{
+  localStorage.setItem('acc_name',document.getElementById('name').value);
+  localStorage.setItem('acc_email',document.getElementById('email').value);
+  localStorage.setItem('acc_phone',document.getElementById('phone').value);
+  localStorage.setItem('acc_password',document.getElementById('password').value);
+  localStorage.setItem('acc_pic',document.getElementById('picUrl').value);
+  loadProfile();
+});
+
+document.getElementById('editBtn').addEventListener('click',()=>{
+  document.getElementById('name').value=localStorage.getItem('acc_name');
+  document.getElementById('email').value=localStorage.getItem('acc_email');
+  document.getElementById('phone').value=localStorage.getItem('acc_phone');
+  document.getElementById('password').value=localStorage.getItem('acc_password');
+  document.getElementById('picUrl').value=localStorage.getItem('acc_pic');
+  showSignup();
+});
+
+document.getElementById('logoutBtn').addEventListener('click',()=>{
+  if(confirm("क्या आप वाकई लॉगआउट करना चाहते हैं?")){
+    localStorage.clear();
+    showSignup();
+  }
+});
+
+const navItems = document.querySelectorAll('.nav-item');
+const navLinks = {
+  home: "home.html",
+  learning: "learning.html",
+  account: "account.html"
+};
+navItems.forEach(n => n.addEventListener('click', () => {
+  const dest = n.dataset.nav;
+  if (navLinks[dest]) window.location.href = navLinks[dest];
+}));
+
+loadProfile();
+</script>
+
+</body>
+</html>

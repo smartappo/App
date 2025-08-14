@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Learn — Polytechnic</title>
+  <style>
+    :root{
+      --bg:#f6fbff; --card:#ffffff; --accent:#ff7aa2; --accent2:#6ec6ff; --text:#223;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family: 'Segoe UI', system-ui, -apple-system, Roboto, 'Noto Sans', sans-serif;background:linear-gradient(180deg,var(--bg),#e9f7ff);color:var(--text)}
+    .app{max-width:900px;margin:12px auto;padding:12px}
+    header{display:flex;align-items:center;gap:12px}
+    .logo{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:20px;box-shadow:0 8px 20px rgba(22,48,80,0.08)}
+    h1{font-size:20px;margin:0}
+    p.lead{margin:4px 0 12px;color:#375}
+    .card{background:var(--card);border-radius:18px;padding:14px;box-shadow:0 6px 18px rgba(30,60,100,0.06);}
+    h2{margin-top:0}
+    ul.q-list{padding-left:20px}
+    ul.q-list li{margin-bottom:10px;line-height:1.5}
+
+    /* footer nav */
+    .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:calc(100% - 40px);max-width:900px;display:flex;justify-content:space-between;background:rgba(255,255,255,0.95);padding:8px;border-radius:16px;box-shadow:0 12px 24px rgba(20,60,100,0.08);}
+    .nav-item{flex:1;text-align:center;padding:10px 6px;border-radius:10px;cursor:pointer}
+    .nav-item.active{background:linear-gradient(90deg,rgba(110,198,255,0.12),rgba(255,122,162,0.06))}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="logo">¡Π¡</div>
+      <div>
+        <h1> Polytechnic Learn</h1>
+        <p class="lead">Science & Maths Questions in Hindi</p>
+      </div>
+    </header>
+
+    <main class="card">
+      <h2>पॉलीटेक्निक गणित प्रश्न</h2>
+      <ul class="q-list">
+        <li>1. यदि एक ट्रेन 60 km/h की गति से चल रही है तो 120 km की दूरी तय करने में कितना समय लगेगा?</li>
+        <li>2. यदि त्रिभुज का क्षेत्रफल 50 वर्ग सेमी है और आधार 10 सेमी है, तो ऊँचाई ज्ञात करें।</li>
+        <li>3. एक वस्तु को 1000 रुपये में खरीदा गया और 1200 रुपये में बेचा गया, लाभ प्रतिशत ज्ञात करें।</li>
+      </ul>
+
+      <h2>पॉलीटेक्निक विज्ञान प्रश्न</h2>
+      <ul class="q-list">
+        <li>1. न्यूटन का दूसरा गति का नियम क्या कहता है?</li>
+        <li>2. जल का रासायनिक सूत्र क्या है?</li>
+        <li>3. वायुमंडल में सबसे अधिक मात्रा में कौन सी गैस पाई जाती है?</li>
+      </ul>
+    </main>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-item" data-nav="home">Home</div>
+    <div class="nav-item active" data-nav="learning">Learning</div>
+    <div class="nav-item" data-nav="account">Account</div>
+  </nav>
+
+  <script>
+    const navItems = document.querySelectorAll('.nav-item');
+    const navLinks = {
+      home: "home.html",
+      learning: "learning.html",
+      account: "account.html"
+    };
+    navItems.forEach(n => n.addEventListener('click', () => {
+      const dest = n.dataset.nav;
+      if (navLinks[dest]) window.location.href = navLinks[dest];
+    }));
+  </script>
+</body>
+</html>
